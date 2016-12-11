@@ -52,7 +52,7 @@ export const getCollections = () => {
                photosetInfo.secret,
                'm',
              ),
-              photos: photosetInfo.photos,
+              photos: parseInt(photosetInfo.photos, 10),
               date: new Date(parseInt(photosetInfo.date_create, 10) * 1000),
             }
           }),
