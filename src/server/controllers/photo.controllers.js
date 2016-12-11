@@ -1,4 +1,5 @@
 import * as FlickrService from '../services/flickr.service'
+import * as ViewsService from '../services/views.service'
 
 export const getCollections = {
   handler: (req, reply) => {
@@ -13,17 +14,13 @@ export const getPhotoset = {
     FlickrService.getPhotoset(req.params.id).then((photoset) => {
       reply(photoset)
     })
-  },
-}
-
-export const getPhoto = {
-  handler: (req, reply) => {
-    reply('Hello World!')
+    ViewsService.incPhotosetView(req.params.id)
   },
 }
 
 export const incPhotoView = {
   handler: (req, reply) => {
-    reply('Hello World!')
+    ViewsService.incPhotoView(req.params.id)
+    reply()
   },
 }
