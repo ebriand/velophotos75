@@ -62,5 +62,29 @@ export const getCollections = () => {
 }
 
 export const getPhotoset = (photosetId) => {
-  return request(`${flickrURL}?method=flickr.photosets.getInfo&photoset_id=${photosetId}${flickrURLParams}`)
+  return request(`${flickrURL}?method=flickr.photosets.getPhotos&photoset_id=${photosetId}${flickrURLParams}`)
+    .then((result) => {
+      const photosetInfo = result.photoset
+      return Promise.resolve({
+        title: photosetInfo.title,
+        photos: _.map(photosetInfo.photo, (photo) => {
+          return {
+            id: photo.id,
+            title: photo.title,
+            url: getPhotoUrl(photo.farm,
+             photo.server,
+             photo.id,
+             photo.secret,
+             'b',
+            ),
+            thumbnailUrl: getPhotoUrl(photo.farm,
+             photo.server,
+             photo.id,
+             photo.secret,
+             'n',
+            ),
+          }
+        }),
+      })
+    })
 }
