@@ -1,8 +1,8 @@
 import _ from 'lodash'
 import staticRoutes from './static.routes'
-import dummyRoutes from './dummy.routes'
+import photoRoutes from './photo.routes'
 
 export default () => {
-  const routers = [staticRoutes, dummyRoutes]
+  const routers = [staticRoutes, photoRoutes]
   return _.flatten(routers)
 }
