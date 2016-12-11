@@ -51,6 +51,7 @@
     "hapi": "16.0.1",
     "inert": "4.0.3",
     "lodash": "4.17.2",
+    "mongoose": "4.7.2",
     "request": "2.79.0",
     "request-promise": "4.1.1",
     "source-map-support": "0.4.6"

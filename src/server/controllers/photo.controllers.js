@@ -1,11 +1,26 @@
+import Promise from 'bluebird'
+import _ from 'lodash'
 import * as FlickrService from '../services/flickr.service'
-import * as ViewsService from '../services/views.service'
+import ViewsService from '../services/views.service'
 
 export const getCollections = {
   handler: (req, reply) => {
-    FlickrService.getCollections().then((collections) => {
-      reply(collections)
-    })
+    Promise.all([FlickrService.getCollections(), ViewsService.getPhotosetViews()])
+      .then((results) => {
+        const collections = results[0]
+        const photosetViews = _.keyBy(results[1], 'flickrId')
+        reply(_.map(collections, (collection) => {
+          return {
+            ...collection,
+            photosets: _.map(collection.photosets, (photoset) => {
+              return {
+                ...photoset,
+                nbViews: photosetViews[photoset.id] ? photosetViews[photoset.id].nbViews : 0,
+              }
+            }),
+          }
+        }))
+      })
   },
 }
 
@@ -14,13 +29,14 @@ export const getPhotoset = {
     FlickrService.getPhotoset(req.params.id).then((photoset) => {
       reply(photoset)
     })
-    ViewsService.incPhotosetView(req.params.id)
+    ViewsService.increment(req.params.id, true)
+      .then(() => {})
   },
 }
 
 export const incPhotoView = {
   handler: (req, reply) => {
-    ViewsService.incPhotoView(req.params.id)
-    reply()
+    ViewsService.increment(req.params.id)
+      .then(() => reply())
   },
 }
