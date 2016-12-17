@@ -7,7 +7,5 @@ export const assets = {
 }
 
 export const index = {
-  handler: (request, reply) => {
-    reply.file(`${publicPath}/index.html`)
-  },
+  handler: (request, reply) => reply.file(`${publicPath}/index.html`),
 }

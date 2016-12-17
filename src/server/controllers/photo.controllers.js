@@ -6,16 +6,15 @@ import * as ViewsService from '../services/views.service'
 export const getCollections = {
   handler: (req, reply) => {
     Promise.all([FlickrService.getCollections(), ViewsService.getPhotosetViews()])
-      .then((results) => {
-        const collections = results[0]
-        const photosetViews = _.keyBy(results[1], 'flickrId')
+      .then(([collections, photosetViews]) => {
+        const idxPhotosetViews = _.keyBy(photosetViews, 'flickrId')
         reply(_.map(collections, (collection) => {
           return {
             ...collection,
             photosets: _.map(collection.photosets, (photoset) => {
               return {
                 ...photoset,
-                nbViews: photosetViews[photoset.id] ? photosetViews[photoset.id].nbViews : 0,
+                nbViews: idxPhotosetViews[photoset.id] ? idxPhotosetViews[photoset.id].nbViews : 0,
               }
             }),
           }
