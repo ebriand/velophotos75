@@ -1,6 +1,6 @@
 import Promise from 'bluebird'
 import _ from 'lodash'
-import * as FlickrService from '../services/flickr.service'
+import * as FlickrService from '../services/cachedFlickr.service'
 import * as ViewsService from '../services/views.service'
 
 export const getCollections = {
