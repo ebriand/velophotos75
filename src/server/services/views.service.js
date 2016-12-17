@@ -15,23 +15,16 @@ const viewsSchema = new mongoose.Schema({
   photoset: Boolean,
 })
 
-// eslint-disable-next-line import/no-mutable-exports
-let viewModel
+const viewsModel = mongoose.model('Views', viewsSchema)
 
-viewsSchema.statics.getPhotosetViews = () => {
-  return viewModel.find({ photoset: true })
-}
+export const getPhotosetViews = () => viewsModel.find({ photoset: true })
 
-viewsSchema.statics.getPhotoViews = (photoIds) => {
-  return viewModel.find({ flickrId: { $in: photoIds } })
-}
+export const getPhotoViews = photoIds => viewsModel.find({ flickrId: { $in: photoIds } })
 
-viewsSchema.statics.findByFlickrId = (flickrId) => {
-  return viewModel.findOne({ flickrId })
-}
+export const findByFlickrId = flickrId => viewsModel.findOne({ flickrId })
 
-viewsSchema.statics.increment = (flickrId, isPhotoset) => {
-  return viewModel.update(
+export const increment = (flickrId, isPhotoset) =>
+  viewsModel.update(
     { flickrId },
     {
       $inc: { nbViews: 1 },
@@ -39,7 +32,3 @@ viewsSchema.statics.increment = (flickrId, isPhotoset) => {
     },
     { upsert: true },
   )
-}
-
-viewModel = mongoose.model('Views', viewsSchema)
-export default viewModel
