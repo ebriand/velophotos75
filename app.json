@@ -1,0 +1,6 @@
+{
+  "name": "Velophotos75",
+  "description": "Website with bycicles",
+  "repository": "https://github.com/ebriand/velophotos75",
+  "image": "heroku/nodejs"
+}
