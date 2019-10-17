@@ -50,7 +50,7 @@
     "good-squeeze": "5.0.1",
     "hapi": "16.0.1",
     "inert": "4.0.3",
-    "lodash": "4.17.2",
+    "lodash": "4.17.13",
     "mongoose": "4.7.2",
     "node-cache": "4.1.0",
     "request": "2.79.0",
